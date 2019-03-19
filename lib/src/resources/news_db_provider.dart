@@ -40,7 +40,7 @@ class NewDbProvider {
     );
   }
 
-  fetchItem(int id) async {
+  Future<ItemModel> fetchItem(int id) async {
     final maps = await db.query(
       "Items",
       columns: null,
@@ -49,8 +49,12 @@ class NewDbProvider {
     );
 
     if (maps.length > 0 ) {
-
+      return ItemModel.fromDB(maps.first);
     }
     return null;
+  }
+
+  Future<int> addItem(ItemModel items) {
+    return db.insert("Items", items.toMap());
   }
 }

@@ -7,13 +7,13 @@ String url = 'https://hacker-news.firebaseio.com/v0';
 
 class NewsApiProvider{
   Client client =Client();
-  fetchTopIds() async {
+  Future<List<int>> fetchTopIds() async {
     final response = await client.get('$url/topstories.json');
     final data = json.decode(response.body);
 
-    return data;
+    return data.cast<int>();
   }
-  fetchItem(int id) async{
+  Future<ItemModel> fetchItem(int id) async{
     final response = await client.get('$url/$id.json');
     final data =json.decode(response.body);
     return ItemModel.fromJson(data);
